@@ -9,7 +9,7 @@ from .forms import CommentForm
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1)
     template_name = "blog/index.html"
-    paginate_by = 6
+    paginatprie_by = 6
 
 def post_detail(request, slug):
     """
@@ -24,7 +24,6 @@ def post_detail(request, slug):
 
     :template:`blog/post_detail.html`
     """
-    print(request)
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
     comments = post.comments.all().order_by("-created_on")
@@ -32,7 +31,6 @@ def post_detail(request, slug):
     comment_form = CommentForm()
 
     if request.method == "POST":
-        print("The program has received a POST request")
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -53,7 +51,6 @@ def post_detail(request, slug):
         "comment_form": comment_form,
     }
 
-    print("About to render the template!")
     return render(
         request, "blog/post_detail.html", context,
     )

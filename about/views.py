@@ -7,7 +7,6 @@ from .forms import CollaborateForm
 
 def about(request):
     if request.method == "POST":
-        print("The site has received a POST request")
         collaborate_form = CollaborateForm(data=request.POST)
         if collaborate_form.is_valid():
             collaborate_form.save()
